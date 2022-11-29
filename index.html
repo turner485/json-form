@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container col-sm-12">
+        <h1>HTML form json populate</h1>
+        <h2 class="title"></h2>
+        <form action="" class="form col-md-6 col-sm-12 col-xs-12" id="form-1">
+            <select class="form-select" name="select">
+                <option value="" disabled selected hidden>Please Select...</option>
+                <option value="">Please select ...</option>
+                <option value="">Please select ...</option>
+            </select>
+            <p>Form of contact</p>
+            <input type="radio" name="radioBtn" value="">
+            <label for="EMAIL" class="rad1"></label>
+            <input type="radio" name="radioBtn" value="">
+            <label for="TELEPHONE" class="rad1"></label>
+            <input type="radio" name="radioBtn" value="">
+            <label for="NO_CONTACT" class="rad1"></label>
+        </form>
+        <h2 class="title"></h2>
+        <form action="" class="form col-md-6 col-sm-12 col-xs-12" id="form-2">
+            <select class="form-select" name="select">
+                <option value="" disabled selected hidden>Please Select...</option>
+                <option value="">Please select ...</option>
+                <option value="">Please select ...</option>
+                <option value="">Please select ...</option>
+                <option value="">Please select ...</option>
+            </select>
+            <p>Form of contact</p>
+            <input type="radio" name="radioBtn2" value="">
+            <label for="EMAIL" class="rad2"></label>
+            <input type="radio" name="radioBtn2" value="">
+            <label for="TELEPHONE" class="rad2"></label>
+            <input type="radio" name="radioBtn2" value="">
+            <label for="NO_CONTACT" class="rad2"></label>
+        </form>
+        <h2 class="title"></h2>
+        <form action="" class="form col-md-6 col-sm-12 col-xs-12" id="form-3">
+            <select class="form-select" name="select">
+                <option value="" disabled selected hidden>Please Select...</option>
+                <option value="">Please select ...</option>
+                <option value="">Please select ...</option>
+            </select>
+            <p>Form of contact</p>
+            <input type="radio" name="radioBtn3" value="">
+            <label for="EMAIL" class="rad3"></label>
+            <input type="radio" name="radioBtn3" value="">
+            <label for="TELEPHONE" class="rad3"></label>
+            <input type="radio" name="radioBtn3" value="">
+            <label for="NO_CONTACT" class="rad3"></label>
+        </form>
+        <div id="btn-wrap" class="d-none">
+            <button id="btn">Start Form</button>
+        </div>
+        <div id="form-wrapper" class="d-none">
+            <h2>Contact Form</h2>
+            <div class="mb-2">
+                <label for="NAME" class="form-label">Name</label>
+                <input type="text" class="form-control" placeholder="Name...">
+            </div>
+            <div class="mb-2">
+                <label for="EMAIL" class="form-label">Email address</label>
+                <input type="email" class="form-control" placeholder="name@example.com">
+            </div>
+            <div class="mb-2">
+                <label for="TEXT" class="form-label">Message</label>
+                <textarea class="form-control" rows="3" placeholder="Enter message here..."></textarea>
+            </div>
+            <button>Submit Query</button>
+        </div>
+    </div>
+    <script>
+        async function getData() {
+            const response = await fetch('./data.json');
+            return response.json();
+        }
+        async function init() {
+            const data = await getData();
+            const titleHT = document.querySelectorAll(".title");
+            for (t = 0; t < titleHT.length; t++) {
+                // populating the titles
+                titleHT[t].innerHTML = data.forms[t].name;
+                // populating the title text to the form action att
+                document.getElementsByTagName('form')[t].action = data.forms[t].name
+            }
+            const optionsTextF1 = document.querySelectorAll("#form-1 option")
+            // populating the options to form one
+            for (ot1 = 0; ot1 < data.forms[0].options.length; ot1++) {
+                optionsTextF1[ot1 + 1].innerHTML = data.forms[0].options[ot1];
+            }
+            const optionsTextF2 = document.querySelectorAll("#form-2 option")
+            // populating the options to form two
+            for (ot2 = 0; ot2 < data.forms[1].options.length; ot2++) {
+                optionsTextF2[ot2 + 1].innerHTML = data.forms[1].options[ot2];
+            }
+            const optionsTextF3 = document.querySelectorAll("#form-3 option")
+            // populating the options to form three
+            for (ot3 = 0; ot3 < data.forms[2].options.length; ot3++) {
+                optionsTextF3[ot3 + 1].innerHTML = data.forms[2].options[ot3];
+            }
+            const radio1 = document.querySelectorAll(".rad1");
+            const radio2 = document.querySelectorAll(".rad2");
+            const radio3 = document.querySelectorAll(".rad3");
+            let contact = data.forms[0].contact
+            for (r1 = 0; r1 < contact.length; r1++) {
+                //populating all the radio buttons with content text
+                radio1[r1].innerHTML = contact[r1];
+                radio2[r1].innerHTML = contact[r1];
+                radio3[r1].innerHTML = contact[r1];
+                document.getElementsByName("radioBtn")[r1].value = contact[r1];
+                document.getElementsByName("radioBtn2")[r1].value = contact[r1];
+                document.getElementsByName("radioBtn3")[r1].value = contact[r1];
+            }
+        }
+        // selection of both dropdown and radio shows form
+        let selectChange = false;
+        let inputChange = false;
+        var showButton = function() {
+            if (selectChange && inputChange) {
+                let button = document.getElementById('form-wrapper');
+                button.classList.remove('d-none')
+            }
+        }
+        document.querySelectorAll(".form-select").forEach(item => {
+            item.addEventListener('change', function handleChange(event) {
+                selectChange = true;
+                showButton();
+            })
+        });
+        document.querySelectorAll("input").forEach(item => {
+            item.addEventListener('change', function handleChange(event) {
+                inputChange = true;
+                showButton();
+            })
+        });
+        init()
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+* {
+    color: #0e1111;
+}
+h1 {
+    text-align: center;
+    font-size: 50px;
+    margin-bottom: 1em;
+    margin-top: 0.5em;
+}
+h2 {
+    font-size: 22px;
+}
+#form-1,
+#form-2 {
+    margin-bottom: 1em;
+}
+label {
+    margin: 5px 0 0 8px;
+}
+p {
+    font-weight: 600;
+    margin: 0 0 0 0;
+}
+#btn-wrap {
+    text-align: center;
+    margin-top: 1.5em;
+}
+#form-wrapper {
+    margin: 2em 0;
+}
+button {
+    margin: 0 auto;
+}
